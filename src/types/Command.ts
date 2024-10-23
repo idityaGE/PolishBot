@@ -1,7 +1,9 @@
-import { Message } from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 
 export interface Command {
-  name: string;  // Add this to the interface
-  description: string;  // Add this to the interface
-  execute(message: Message, args: string[], lastTransformedMessage?: string | null): Promise<string | void>;
+  data: any;
+  execute(
+    interaction: ChatInputCommandInteraction,
+    lastTransformedMessage?: string | null
+  ): Promise<string | void>;
 }

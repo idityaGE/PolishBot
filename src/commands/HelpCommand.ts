@@ -1,11 +1,13 @@
-import { Message, EmbedBuilder } from 'discord.js';
+import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
 import { Command } from '../types/Command';
 
+
 export class HelpCommand implements Command {
-  name = 'help';
-  description = 'Shows all available commands';
-  
-  async execute(message: Message): Promise<void> {
+  data = new SlashCommandBuilder()
+    .setName('help')
+    .setDescription('Shows the available commands');
+
+  async execute(interaction: any): Promise<string> {
     const embed = new EmbedBuilder()
       .setColor(0x0099FF)
       .setTitle('Available Commands')
@@ -35,9 +37,10 @@ export class HelpCommand implements Command {
       .setFooter({
         text: 'Use these commands to transform and improve your messages!'
       });
-
+    await interaction.deferReply();
     try {
-      await message.reply({ embeds: [embed] });
+      await interaction.editReply({ embeds: [embed] });
+      return 'Help message sent';
     } catch (error: any) {
       throw new Error(`Failed to send help message: ${error.message}`);
     }

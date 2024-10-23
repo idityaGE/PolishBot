@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, Message, Events } from 'discord.js';
+import { Client, GatewayIntentBits, Events, REST, Routes } from 'discord.js';
 import dotenv from 'dotenv';
 import { CommandHandler } from './handlers/CommandHandler';
 import { initializeOpenAI } from './services/openai';
@@ -16,26 +16,44 @@ const client = new Client({
 
 const commandHandler = new CommandHandler();
 
-client.once(Events.ClientReady, (c) => {
+// Register slash commands with Discord
+async function registerCommands() {
+  try {
+    const rest = new REST().setToken(process.env.DISCORD_TOKEN!);
+    const commands = commandHandler.getSlashCommandsData();
+
+    console.log('Started refreshing application (/) commands.');
+
+    await rest.put(
+      Routes.applicationCommands(process.env.CLIENT_ID!),
+      { body: commands }
+    );
+
+    console.log('Successfully reloaded application (/) commands.');
+  } catch (error) {
+    console.error('Error registering slash commands:', error);
+  }
+}
+
+client.once(Events.ClientReady, async (c) => {
   console.log(`Ready! Logged in as ${c.user.tag}`);
   try {
     initializeOpenAI();
+    await registerCommands();
   } catch (error) {
-    console.error('Failed to initialize OpenAI:', error);
+    console.error('Initialization error:', error);
     process.exit(1);
   }
 });
 
-client.on(Events.MessageCreate, async (message: Message) => {
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
+
   try {
-    if (message.author.bot) return;
-    await commandHandler.handleMessage(message);
+    await commandHandler.handleInteraction(interaction);
   } catch (error: any) {
-    await errorHandler(error, message);
+    await errorHandler(error, interaction);
   }
 });
 
-client.login(process.env.DISCORD_TOKEN).catch(error => {
-  console.error('Failed to login:', error);
-  process.exit(1);
-});
+client.login(process.env.DISCORD_TOKEN);

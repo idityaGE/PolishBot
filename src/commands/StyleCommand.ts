@@ -1,27 +1,31 @@
-import { Message } from 'discord.js';
+import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { Command } from '../types/Command';
 import { generateResponse } from '../services/openai';
-import { ValidationError } from '../utils/errors';
 
 export class StyleCommand implements Command {
-  name = 'style';
-  description = 'Transforms casual text into a professional version';
+  data = new SlashCommandBuilder()
+    .setName('style')
+    .setDescription('Transforms casual text into a professional version')
+    .addStringOption(option =>
+      option
+        .setName('text')
+        .setDescription('The text to transform')
+        .setRequired(true)
+    );
 
-  async execute(message: Message, args: string[]): Promise<string> {
-    if (!args.length) {
-      throw new ValidationError('Please provide a message to style.');
-    }
+  async execute(interaction: any): Promise<string> {
+    const input = interaction.options.getString('text', true);
 
-    const input = args.join(' ');
-    const prompt = `Transform the following casual message into a professional version:\n\n${input}`;
+    await interaction.deferReply();
 
     try {
+      const prompt = `Transform the following casual message into a professional version:\n\n${input}`;
       const professionalVersion = await generateResponse(prompt, {
         temperature: 0.7,
         maxTokens: 300
       });
 
-      await message.reply(professionalVersion);
+      await interaction.editReply(professionalVersion);
       return professionalVersion;
     } catch (error: any) {
       throw new Error(`Failed to style message: ${error.message}`);

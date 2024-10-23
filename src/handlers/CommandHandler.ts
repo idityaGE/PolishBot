@@ -1,54 +1,56 @@
-import { Message } from 'discord.js';
-import { Command } from '../types/Command';
+import {
+  ChatInputCommandInteraction,
+  Collection,
+  SlashCommandBuilder
+} from 'discord.js';
 import { StyleCommand } from '../commands/StyleCommand';
 import { MdStyleCommand } from '../commands/MdStyleCommand';
 import { RegenCommand } from '../commands/RegenCommand';
 import { SummarizeCommand } from '../commands/SummarizeCommand';
 import { HelpCommand } from '../commands/HelpCommand';
+import { Command } from '../types/Command';
 
 export class CommandHandler {
-  private commands: Map<string, Command>;
-  private prefix: string = '/';
+  private commands: Collection<string, Command>;
   private lastTransformedMessage: string | null = null;
 
   constructor() {
-    // Initialize the Map with explicit type
-    this.commands = new Map<string, Command>();
+    this.commands = new Collection<string, Command>();
 
-    // Add commands individually
-    this.commands.set('style', new StyleCommand());
-    this.commands.set('md-style', new MdStyleCommand());
-    this.commands.set('regen', new RegenCommand());
-    this.commands.set('summarize', new SummarizeCommand());
-    this.commands.set('help', new HelpCommand());
+    // Initialize commands
+    this.registerCommand(new StyleCommand());
+    this.registerCommand(new MdStyleCommand());
+    this.registerCommand(new RegenCommand());
+    this.registerCommand(new SummarizeCommand());
+    this.registerCommand(new HelpCommand());
   }
 
-  async handleMessage(message: Message): Promise<void> {
-    if (!message.content.startsWith(this.prefix)) return;
+  private registerCommand(command: Command) {
+    this.commands.set(command.data.name, command);
+  }
 
-    const args = message.content.slice(this.prefix.length).trim().split(/ +/);
-    const commandName = args.shift()?.toLowerCase();
+  getSlashCommandsData() {
+    return Array.from(this.commands.values()).map(command => command.data.toJSON());
+  }
 
-    if (!commandName) return;
+  async handleInteraction(interaction: ChatInputCommandInteraction) {
+    const command = this.commands.get(interaction.commandName);
 
-    const command = this.commands.get(commandName);
     if (!command) {
-      await message.reply('Unknown command. Use /help to see available commands.');
+      await interaction.reply({
+        content: 'Command not found!',
+        ephemeral: true
+      });
       return;
     }
 
     try {
-      const result = await command.execute(message, args, this.lastTransformedMessage);
-      if (result && commandName !== 'help') {
+      const result = await command.execute(interaction, this.lastTransformedMessage);
+      if (result && interaction.commandName !== 'help') {
         this.lastTransformedMessage = result;
       }
     } catch (error) {
       throw error;
     }
-  }
-
-  // Utility method to get all commands (useful for help command)
-  getCommands(): Map<string, Command> {
-    return this.commands;
   }
 }

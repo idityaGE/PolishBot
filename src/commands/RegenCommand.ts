@@ -1,26 +1,31 @@
-import { Message } from 'discord.js';
 import { Command } from '../types/Command';
 import { generateResponse } from '../services/openai';
-import { ValidationError } from '../utils/errors';
+import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 
 export class RegenCommand implements Command {
-  name = 'regen';
-  description = 'Generates a different version of the last transformed message';
-  
-  async execute(message: Message, args: string[], lastTransformedMessage: string | null): Promise<string> {
-    if (!lastTransformedMessage) {
-      throw new ValidationError('No previous message to regenerate. Please use /style or /md-style first.');
-    }
+  data = new SlashCommandBuilder()
+    .setName('regen')
+    .setDescription('Generate a different version of the last styled message')
+    .addStringOption(option =>
+      option
+        .setName('text')
+        .setDescription('The text to transform')
+        .setRequired(true)
+    );
 
-    const prompt = `Generate a different version of the following message, maintaining the same professional tone but using different wording:\n\n${lastTransformedMessage}`;
+  async execute(interaction: any): Promise<string> {
+    const input = interaction.options.getString('text', true);
+
+    await interaction.deferReply();
 
     try {
+      const prompt = `Generate a different version of the following message, maintaining the same professional tone but using different wording:\n\n${input}`;
       const regeneratedVersion = await generateResponse(prompt, {
-        temperature: 0.8, // Slightly higher temperature for more variation
-        maxTokens: 400
+        temperature: 0.7,
+        maxTokens: 300
       });
 
-      await message.reply(regeneratedVersion);
+      await interaction.editReply(regeneratedVersion);
       return regeneratedVersion;
     } catch (error: any) {
       throw new Error(`Failed to regenerate message: ${error.message}`);

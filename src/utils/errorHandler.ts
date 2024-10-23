@@ -1,7 +1,10 @@
-import { Message } from 'discord.js';
+import { ChatInputCommandInteraction } from 'discord.js';
 import { OpenAIConfigError, ValidationError } from './errors';
 
-export async function errorHandler(error: Error, message: Message): Promise<void> {
+export async function errorHandler(
+  error: Error,
+  interaction: ChatInputCommandInteraction
+): Promise<void> {
   console.error('Error:', error);
 
   let responseMessage: string;
@@ -15,7 +18,11 @@ export async function errorHandler(error: Error, message: Message): Promise<void
   }
 
   try {
-    await message.reply(responseMessage);
+    if (interaction.deferred) {
+      await interaction.editReply(responseMessage);
+    } else {
+      await interaction.reply({ content: responseMessage, ephemeral: true });
+    }
   } catch (replyError) {
     console.error('Failed to send error message:', replyError);
   }

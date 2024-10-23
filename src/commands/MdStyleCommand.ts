@@ -1,30 +1,34 @@
-import { Message } from 'discord.js';
+import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { Command } from '../types/Command';
 import { generateResponse } from '../services/openai';
-import { ValidationError } from '../utils/errors';
 
 export class MdStyleCommand implements Command {
-  name = 'md-style';
-  description = 'Transforms a message into a well-structured version using Markdown formatting';
+  data = new SlashCommandBuilder()
+    .setName('mdstyle')
+    .setDescription('Transforms casual text into a well-structured version using Markdown formatting')
+    .addStringOption(option =>
+      option
+        .setName('text')
+        .setDescription('The text to transform')
+        .setRequired(true)
+    );
 
-  async execute(message: Message, args: string[]): Promise<string> {
-    if (!args.length) {
-      throw new ValidationError('Please provide a message to format in Markdown.');
-    }
+  async execute(interaction: any): Promise<string> {
+    const input = interaction.options.getString('text', true);
 
-    const input = args.join(' ');
-    const prompt = `Transform the following message into a well-structured version using Markdown formatting. Use appropriate headers, bullet points, or numbered lists where relevant. Make it clear and professional:\n\n${input}`;
+    await interaction.deferReply();
 
     try {
-      const mdVersion = await generateResponse(prompt, {
+      const prompt = `Transform the following message into a well-structured version using Markdown formatting. Use appropriate headers, bullet points, or numbered lists where relevant. Make it clear and professional:\n\n${input}`;
+      const professionalVersion = await generateResponse(prompt, {
         temperature: 0.7,
-        maxTokens: 400
+        maxTokens: 300
       });
 
-      await message.reply(mdVersion);
-      return mdVersion;
+      await interaction.editReply(professionalVersion);
+      return professionalVersion;
     } catch (error: any) {
-      throw new Error(`Failed to create Markdown version: ${error.message}`);
+      throw new Error(`Failed to mdstyle message: ${error.message}`);
     }
   }
 }

@@ -1,30 +1,34 @@
-import { Message } from 'discord.js';
+import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
 import { Command } from '../types/Command';
 import { generateResponse } from '../services/openai';
-import { ValidationError } from '../utils/errors';
 
 export class SummarizeCommand implements Command {
-  name = 'summarize';
-  description = 'Summarizes a piece of text into a concise but comprehensive version';
-  
-  async execute(message: Message, args: string[]): Promise<string> {
-    if (!args.length) {
-      throw new ValidationError('Please provide text to summarize.');
-    }
+  data = new SlashCommandBuilder()
+    .setName('summarize')
+    .setDescription('Summarize text')
+    .addStringOption(option =>
+      option
+        .setName('text')
+        .setDescription('The text to transform')
+        .setRequired(true)
+    );
 
-    const input = args.join(' ');
-    const prompt = `Provide a concise but comprehensive summary of the following text:\n\n${input}`;
+  async execute(interaction: any): Promise<string> {
+    const input = interaction.options.getString('text', true);
+
+    await interaction.deferReply();
 
     try {
+      const prompt = `Provide a concise but comprehensive summary of the following text:\n\n${input}`;
       const summary = await generateResponse(prompt, {
-        temperature: 0.5, // Lower temperature for more focused summary
-        maxTokens: 250
+        temperature: 0.7,
+        maxTokens: 300
       });
 
-      await message.reply(summary);
+      await interaction.editReply(summary);
       return summary;
     } catch (error: any) {
-      throw new Error(`Failed to summarize text: ${error.message}`);
+      throw new Error(`Failed to summarize message: ${error.message}`);
     }
   }
 }
