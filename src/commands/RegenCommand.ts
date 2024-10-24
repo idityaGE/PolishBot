@@ -25,7 +25,9 @@ export class RegenCommand implements Command {
         maxTokens: 300
       });
 
-      await interaction.editReply(regeneratedVersion);
+      const formattedResponse = `\`\`\`\n${regeneratedVersion}\n\`\`\``;
+
+      await interaction.editReply(formattedResponse);
       return regeneratedVersion;
     } catch (error: any) {
       throw new Error(`Failed to regenerate message: ${error.message}`);

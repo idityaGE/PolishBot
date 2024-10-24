@@ -25,7 +25,9 @@ export class MdStyleCommand implements Command {
         maxTokens: 300
       });
 
-      await interaction.editReply(professionalVersion);
+      const formattedResponse = `\`\`\`\n${professionalVersion}\n\`\`\``;
+
+      await interaction.editReply(formattedResponse);
       return professionalVersion;
     } catch (error: any) {
       throw new Error(`Failed to mdstyle message: ${error.message}`);

@@ -25,7 +25,9 @@ export class SummarizeCommand implements Command {
         maxTokens: 300
       });
 
-      await interaction.editReply(summary);
+      const formattedResponse = `\`\`\`\n${summary}\n\`\`\``;
+
+      await interaction.editReply(formattedResponse);
       return summary;
     } catch (error: any) {
       throw new Error(`Failed to summarize message: ${error.message}`);
