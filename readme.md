@@ -121,7 +121,7 @@ when ever I want to write a professional message or post, I always struggle to f
 1. Invite the bot to your server using the OAuth2 link:
 
    ```bash
-   https://discord.com/oauth2/authorize?client_id=<YOUR_CLIENT_ID>&scope=bot&permissions=8
+   https://discord.com/oauth2/authorize?client_id=<CLIENT_ID>&permissions=8&integration_type=0&scope=bot
    ```
 
 2. Use the available commands in any text channel:
