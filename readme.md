@@ -145,7 +145,7 @@ Contributions are welcome! If you'd like to add new features or fix bugs, please
 
 ## :star2: Star History
 
-<a href="https://star-history.com/#idityage/Assignment-Code-to-PDF&Timeline">
+<a href="https://star-history.com/#idityage/PolishBot&Timeline">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=idityage/&type=Timeline&theme=dark" />
   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=idityage/PolishBot&type=Timeline" />
