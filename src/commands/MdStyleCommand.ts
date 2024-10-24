@@ -1,6 +1,6 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction } from 'discord.js';
+import { SlashCommandBuilder } from 'discord.js';
 import { Command } from '../types/Command';
-import { generateResponse } from '../services/openai';
+import { generateResponse } from '../services/gemini';
 
 export class MdStyleCommand implements Command {
   data = new SlashCommandBuilder()

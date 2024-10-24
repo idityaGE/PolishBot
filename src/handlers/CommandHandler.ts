@@ -1,7 +1,6 @@
 import {
   ChatInputCommandInteraction,
   Collection,
-  SlashCommandBuilder
 } from 'discord.js';
 import { StyleCommand } from '../commands/StyleCommand';
 import { MdStyleCommand } from '../commands/MdStyleCommand';

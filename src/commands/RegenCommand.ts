@@ -1,5 +1,5 @@
 import { Command } from '../types/Command';
-import { generateResponse } from '../services/openai';
+import { generateResponse } from '../services/gemini';
 import { SlashCommandBuilder } from 'discord.js';
 
 export class RegenCommand implements Command {

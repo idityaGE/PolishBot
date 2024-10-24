@@ -2,7 +2,7 @@ import { ChatInputCommandInteraction } from 'discord.js';
 import { OpenAIConfigError, ValidationError } from './errors';
 
 export async function errorHandler(
-  error: Error,
+  error: Error, 
   interaction: ChatInputCommandInteraction
 ): Promise<void> {
   console.error('Error:', error);

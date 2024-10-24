@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits, Events, REST, Routes } from 'discord.js';
 import dotenv from 'dotenv';
 import { CommandHandler } from './handlers/CommandHandler';
-import { initializeOpenAI } from './services/openai';
+import { initializeAI } from './services/gemini';
 import { errorHandler } from './utils/errorHandler';
 
 dotenv.config();
@@ -38,7 +38,7 @@ async function registerCommands() {
 client.once(Events.ClientReady, async (c) => {
   console.log(`Ready! Logged in as ${c.user.tag}`);
   try {
-    initializeOpenAI();
+    initializeAI();
     await registerCommands();
   } catch (error) {
     console.error('Initialization error:', error);
