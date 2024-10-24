@@ -2,28 +2,55 @@
 
 PolishBot is a Discord bot designed to help users transform casual messages into polished, professional communication. It uses OpenAI's GPT-3.5 API to analyze and rewrite text, offering both a plain professional style and markdown-formatted responses.
 
+<details>
+<summary>
+
+## :notebook_with_decorative_cover: Table of Contents
+
+</summary>
+
+- [Motivation](#motivation)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Setup Instructions](#setup-instructions)
+- [Usage](#usage)
+- [License](#license)
+
+</details>
+
 ## Features
 
 - **/style**: Transforms casual text into a professional version.
-- **/md-style**: Formats professional text in markdown with bullet points for structured writing.
+- **/mdstyle**: Formats professional text in markdown with bullet points for structured writing.
 - **/regen**: Regenerates the last transformed text, providing alternative versions.
+- **/summarize**: Summarizes a long text into a concise version.
 - Easy integration with Discord using Slash Commands.
 
-## Tech Stack
+## Motivation
 
-- **Node.js** with **TypeScript**: Core runtime for bot development.
-- **Discord.js**: Discord API library for interacting with the Discord platform.
-- **OpenAI API**: For text processing using the GPT-3.5 model.
+when ever I want to write a professional message or post, I always struggle to find the right words and structure. I thought it would be great to have a tool that can help me transform my casual text into a professional one. That's why I created PolishBot, a Discord bot that can help users transform their messages into polished, professional communication.
 
-## Setup and Installation
+## :camera: Screenshots
 
-### Prerequisites
+![Realtime Preview](/.github/images/img1.png "Realtime Preview")
+
+![Adding More Question](/.github/images/img2.png "Adding More Question")
+
+## :coffee: Buy Me a Coffee
+
+[<img src="https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" width="200" />](https://www.buymeacoffee.com/idityage "Buy me a Coffee")
+
+## :rocket: Follow Me
+
+[![Follow Me](https://img.shields.io/github/followers/idityage?style=social&label=Follow&maxAge=2592000)](https://github.com/idityage "Follow Me")
+
+## :gear: Technologies Used
 
 - **Node.js** (v16.6.0 or higher)
 - A **Discord bot** (created via the [Discord Developer Portal](https://discord.com/developers/applications)).
 - An **Gemini API key** (create an account at [OpenAI](https://ai.google.dev/gemini-api/docs/quickstart?lang=node)).
 
-### Steps
+## :toolbox: Setup Instructions
 
 1. Clone this repository:
 
@@ -89,7 +116,7 @@ PolishBot is a Discord bot designed to help users transform casual messages into
     └── tsconfig.json
 ```
 
-## Usage
+## :page_with_curl: Usage
 
 1. Invite the bot to your server using the OAuth2 link:
 
@@ -111,12 +138,23 @@ PolishBot is a Discord bot designed to help users transform casual messages into
 
 Contributions are welcome! If you'd like to add new features or fix bugs, please submit a pull request.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
 - **Discord.js** for making Discord bot development seamless.
 - **Google-Gemini** for providing the API to handle text transformation.
 
+## :star2: Star History
+
+<a href="https://star-history.com/#idityage/Assignment-Code-to-PDF&Timeline">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=idityage/Assignment-Code-to-PDF&type=Timeline&theme=dark" />
+  <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=idityage/Assignment-Code-to-PDF&type=Timeline" />
+  <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=idityage/Assignment-Code-to-PDF&type=Timeline" />
+</picture>
+</a>
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+<br />
