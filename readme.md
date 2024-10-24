@@ -147,9 +147,9 @@ Contributions are welcome! If you'd like to add new features or fix bugs, please
 
 <a href="https://star-history.com/#idityage/Assignment-Code-to-PDF&Timeline">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=idityage/Assignment-Code-to-PDF&type=Timeline&theme=dark" />
-  <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=idityage/Assignment-Code-to-PDF&type=Timeline" />
-  <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=idityage/Assignment-Code-to-PDF&type=Timeline" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=idityage/&type=Timeline&theme=dark" />
+  <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=idityage/PolishBot&type=Timeline" />
+  <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=idityage/PolishBot&type=Timeline" />
 </picture>
 </a>
 
