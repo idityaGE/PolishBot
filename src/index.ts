@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { CommandHandler } from './handlers/CommandHandler';
 import { initializeAI } from './services/gemini';
 import { errorHandler } from './utils/errorHandler';
+import http from 'http';
 
 dotenv.config();
 
@@ -57,3 +58,15 @@ client.on(Events.InteractionCreate, async (interaction) => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
+const PORT = 3000;
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Bot is Live');
+});
+
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+});
