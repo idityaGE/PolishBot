@@ -1,7 +1,7 @@
-export class OpenAIConfigError extends Error {
+export class GeminiConfigError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = 'OpenAIConfigError';
+    this.name = 'GeminiConfigError';
   }
 }
 

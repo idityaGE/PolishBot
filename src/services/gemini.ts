@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { OpenAIConfigError } from '../utils/errors';
+import { GeminiConfigError } from '../utils/errors';
 
 let genAI: GoogleGenerativeAI;
 let model: any;
@@ -8,7 +8,7 @@ export function initializeAI() {
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
-    throw new OpenAIConfigError('Gemini API key is not configured');
+    throw new GeminiConfigError('Gemini API key is not configured');
   }
 
   genAI = new GoogleGenerativeAI(apiKey);
@@ -26,7 +26,7 @@ export async function generateResponse(
   options: GenerateResponseOptions = {}
 ): Promise<string> {
   if (!genAI || !model) {
-    throw new OpenAIConfigError('Gemini client not initialized');
+    throw new GeminiConfigError('Gemini client not initialized');
   }
 
   const {
