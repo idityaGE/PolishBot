@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction } from 'discord.js';
-import { OpenAIConfigError, ValidationError } from './errors';
+import { GeminiConfigError, ValidationError } from './errors';
 
 export async function errorHandler(
   error: Error, 
@@ -11,7 +11,7 @@ export async function errorHandler(
 
   if (error instanceof ValidationError) {
     responseMessage = `❌ ${error.message}`;
-  } else if (error instanceof OpenAIConfigError) {
+  } else if (error instanceof GeminiConfigError) {
     responseMessage = '❌ There was a configuration error. Please contact the bot administrator.';
   } else {
     responseMessage = '❌ An unexpected error occurred. Please try again later.';
